@@ -68,6 +68,29 @@ public class Inventario {
         return true;
     }
 
+    public int busquedaBinaria(String numeroSerie) {
+        if (!estaOrdenado()) {
+            throw new IllegalStateException("El inventario debe estar ordenado por numero de serie");
+        }
+        comparaciones = 0;
+        int bajo = 0;
+        int alto = cantidad - 1;
+        while (bajo <= alto) {
+            int medio = bajo + ((alto - bajo) >>> 1);
+            comparaciones++;
+            int c = equipos[medio].getNumeroSerie().compareTo(numeroSerie);
+            if (c == 0) {
+                return medio;
+            }
+            if (c < 0) {
+                bajo = medio + 1;
+            } else {
+                alto = medio - 1;
+            }
+        }
+        return -(bajo) - 1;
+    }
+
     public void mostrar() {
         if (cantidad == 0) {
             System.out.println("El inventario esta vacio.");
