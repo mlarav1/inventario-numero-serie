@@ -1,0 +1,59 @@
+public class Inventario {
+    private Equipo[] equipos;
+    private int cantidad;
+    private int comparaciones;
+
+    public Inventario(int capacidadInicial) {
+        this.equipos = new Equipo[Math.max(capacidadInicial, 1)];
+        this.cantidad = 0;
+        this.comparaciones = 0;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public int getComparaciones() {
+        return comparaciones;
+    }
+
+    public Equipo obtener(int indice) {
+        return equipos[indice];
+    }
+
+    public void agregarSinOrden(Equipo equipo) {
+        asegurarCapacidad();
+        equipos[cantidad++] = equipo;
+    }
+
+    private void asegurarCapacidad() {
+        if (cantidad == equipos.length) {
+            Equipo[] nuevo = new Equipo[equipos.length * 2];
+            for (int i = 0; i < cantidad; i++) {
+                nuevo[i] = equipos[i];
+            }
+            equipos = nuevo;
+        }
+    }
+
+    public int busquedaLineal(String numeroSerie) {
+        comparaciones = 0;
+        for (int i = 0; i < cantidad; i++) {
+            comparaciones++;
+            if (equipos[i].getNumeroSerie().compareTo(numeroSerie) == 0) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void mostrar() {
+        if (cantidad == 0) {
+            System.out.println("El inventario esta vacio.");
+            return;
+        }
+        for (int i = 0; i < cantidad; i++) {
+            System.out.println(i + " -> " + equipos[i]);
+        }
+    }
+}
