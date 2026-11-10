@@ -91,6 +91,28 @@ public class Inventario {
         return -(bajo) - 1;
     }
 
+    public int puntoInsercion(String numeroSerie) {
+        int resultado = busquedaBinaria(numeroSerie);
+        if (resultado >= 0) {
+            return -1;
+        }
+        return -resultado - 1;
+    }
+
+    public boolean insertarOrdenado(Equipo nuevo) {
+        int punto = puntoInsercion(nuevo.getNumeroSerie());
+        if (punto < 0) {
+            return false;
+        }
+        asegurarCapacidad();
+        for (int i = cantidad; i > punto; i--) {
+            equipos[i] = equipos[i - 1];
+        }
+        equipos[punto] = nuevo;
+        cantidad++;
+        return true;
+    }
+
     public void mostrar() {
         if (cantidad == 0) {
             System.out.println("El inventario esta vacio.");
