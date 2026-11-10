@@ -47,6 +47,27 @@ public class Inventario {
         return -1;
     }
 
+    public void ordenarPorNumeroSerie() {
+        for (int i = 1; i < cantidad; i++) {
+            Equipo actual = equipos[i];
+            int j = i - 1;
+            while (j >= 0 && equipos[j].getNumeroSerie().compareTo(actual.getNumeroSerie()) > 0) {
+                equipos[j + 1] = equipos[j];
+                j--;
+            }
+            equipos[j + 1] = actual;
+        }
+    }
+
+    public boolean estaOrdenado() {
+        for (int i = 1; i < cantidad; i++) {
+            if (equipos[i - 1].getNumeroSerie().compareTo(equipos[i].getNumeroSerie()) > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public void mostrar() {
         if (cantidad == 0) {
             System.out.println("El inventario esta vacio.");
